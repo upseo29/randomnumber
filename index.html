@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สุ่มเลข 000-999 แบบสีสันสดใส</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Mitr', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #ffecd2);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #ff6b6b;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        #result {
+            font-size: 72px;
+            margin: 30px 0;
+            font-weight: 600;
+            color: #4ecdc4;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        button {
+            font-family: 'Mitr', sans-serif;
+            font-size: 20px;
+            padding: 15px 30px;
+            cursor: pointer;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+        button:hover {
+            background-color: #ff8787;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(255, 107, 107, 0.6);
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ สุ่มเลขมหัศจรรย์ ✨</h1>
+        <div id="result">000</div>
+        <button onclick="startRandomAnimation()">🎲 สุ่มเลข!</button>
+    </div>
+
+    <script>
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function animateNumber(element, duration) {
+            const start = Date.now();
+            const animate = () => {
+                const now = Date.now();
+                const elapsed = now - start;
+                if (elapsed < duration) {
+                    element.textContent = getRandomInt(0, 999).toString().padStart(3, '0');
+                    requestAnimationFrame(animate);
+                } else {
+                    const finalNumber = getRandomInt(0, 999);
+                    element.textContent = finalNumber.toString().padStart(3, '0');
+                    element.style.transform = "scale(1.1)";
+                    setTimeout(() => {
+                        element.style.transform = "scale(1)";
+                    }, 200);
+                }
+            };
+            animate();
+        }
+
+        function startRandomAnimation() {
+            const resultElement = document.getElementById('result');
+            const button = document.querySelector('button');
+            button.disabled = true;
+            animateNumber(resultElement, 2000);
+            setTimeout(() => {
+                button.disabled = false;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
